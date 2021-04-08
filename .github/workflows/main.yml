@@ -21,7 +21,7 @@ jobs:
           chmod +x mc
           ./mc alias set remote/ https://cdn.shyim.de ${{ secrets.ACCESS_KEY }} ${{ secrets.ACCESS_SECRET }}
           echo 'Test' > foo.txt
-          ./mc foo.txt remote/phpstorm
+          ./mc cp foo.txt remote/phpstorm
 
       - name: Clone Shopware and run Composer install
         run: |
