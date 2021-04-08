@@ -14,6 +14,14 @@ jobs:
           php-version: 7.4
           tools: composer:v2
           coverage: none
+          
+      - name: Upload to Minio
+        run: |
+          wget https://dl.min.io/client/mc/release/linux-amd64/mc
+          chmod +x mc
+          ./mc alias set remote/ https://cdn.shyim.de ${{ secrets.ACCESS_KEY }} ${{ secrets.ACCESS_SECRET }}
+          echo 'Test' > foo.txt
+          ./mc foo.txt remote/phpstorm
 
       - name: Clone Shopware and run Composer install
         run: |
@@ -39,4 +47,5 @@ jobs:
           wget https://packages.jetbrains.team/maven/p/ij/intellij-shared-indexes-public/com/jetbrains/intellij/indexing/shared/cdn-layout-tool/0.7.52/cdn-layout-tool-0.7.52.zip
           unzip cdn-layout-tool-0.7.52.zip
           export JAVA_HOME=$(pwd)/PhpStorm/jbr/
-          ./cdn-layout-tool-0.7.52/cdn-layout-tool --indexes-dir=$(pwd)/generated-cache --url=https://cdn.shyim.de/phpstorm
+          ./bin/cdn-layout-tool-0.7.52/cdn-layout-tool --indexes-dir=$(pwd)/generated-cache --url=https://cdn.shyim.de/phpstorm
+      
