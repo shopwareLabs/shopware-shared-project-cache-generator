@@ -27,14 +27,16 @@ jobs:
         run: |
           wget https://download-cf.jetbrains.com/webide/PhpStorm-2021.1.tar.gz
           tar xfv PhpStorm-2021.1.tar.gz
+          rm PhpStorm-2021.1.tar.gz
+          mv PhpStorm* PhpStorm
           mkdir generated-cache
           
       - name: Generate Cache
-        run: ./PhpStorm-2021.1/bin/phpstorm.sh dump-shared-index project --output=$(pwd)/generated-cache --tmp=/tmp/phpstorm --project-dir=$(pwd)/development --project-id=sw6_tpl_development
+        run: ./PhpStorm/bin/phpstorm.sh dump-shared-index project --output=$(pwd)/generated-cache --tmp=/tmp/phpstorm --project-dir=$(pwd)/development --project-id=sw6_tpl_development
         
       - name: Generate Cache Map
         run: |
           wget https://packages.jetbrains.team/maven/p/ij/intellij-shared-indexes-public/com/jetbrains/intellij/indexing/shared/cdn-layout-tool/0.7.52/cdn-layout-tool-0.7.52.zip
           unzip cdn-layout-tool-0.7.52.zip
-          export JAVA_HOME=$(pwd)/PhpStorm-2021.1/jbr/
+          export JAVA_HOME=$(pwd)/PhpStorm/jbr/
           ./cdn-layout-tool-0.7.52/cdn-layout-tool --indexes-dir=$(pwd)/generated-cache --url=https://cdn.shyim.de/phpstorm
