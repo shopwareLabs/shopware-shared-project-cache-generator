@@ -25,7 +25,7 @@ jobs:
           
       - name: Clone Shopware and run Composer install
         run: |
-          git clone https://github.com/shopware/platform.git --depth=1
+          git clone https://github.com/shopware/platform.git --depth=1 development
           cd development
           # rm -rf platform
           # git clone https://github.com/shopware/platform.git --depth=1
