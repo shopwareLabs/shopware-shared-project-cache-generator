@@ -21,7 +21,7 @@ jobs:
           chmod +x mc
           ./mc alias set remote/ https://cdn.shyim.de ${{ secrets.ACCESS_KEY }} ${{ secrets.ACCESS_SECRET }}
           mkdir indexes
-          ./mc cp -r remote/phpstorm/* indexes/
+          ./mc cp -r remote/phpstorm/ $(pwd)/indexes/
           
       - name: Clone Shopware and run Composer install
         run: |
