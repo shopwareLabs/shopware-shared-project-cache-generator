@@ -32,7 +32,7 @@ jobs:
           mkdir generated-cache
           
       - name: Generate Cache
-        run: ./PhpStorm/bin/phpstorm.sh dump-shared-index project --output=$(pwd)/generated-cache --tmp=/tmp/phpstorm --project-dir=$(pwd)/development --project-id=sw6_tpl_development_trunk
+        run: ./PhpStorm/bin/phpstorm.sh dump-shared-index project --output=$(pwd)/generated-cache --tmp=/tmp/phpstorm --project-dir=$(pwd)/development/ --project-id=sw6_tpl_development_trunk
         
       - name: Generate Cache Map
         run: |
