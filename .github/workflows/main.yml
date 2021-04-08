@@ -39,7 +39,7 @@ jobs:
           wget -q https://packages.jetbrains.team/maven/p/ij/intellij-shared-indexes-public/com/jetbrains/intellij/indexing/shared/cdn-layout-tool/0.7.52/cdn-layout-tool-0.7.52.zip
           unzip cdn-layout-tool-0.7.52.zip
           export JAVA_HOME=$(pwd)/PhpStorm/jbr/
-          ./bin/cdn-layout-tool-0.7.52/cdn-layout-tool --indexes-dir=$(pwd)/generated-cache --url=https://cdn.shyim.de/phpstorm
+          ./cdn-layout-tool-0.7.52/bin/cdn-layout-tool --indexes-dir=$(pwd)/generated-cache --url=https://cdn.shyim.de/phpstorm
           
       - name: Upload to Minio
         run: |
