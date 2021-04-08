@@ -14,6 +14,14 @@ jobs:
           php-version: 7.4
           tools: composer:v2
           coverage: none
+      
+      - name: Setup Minio Client and Download Storage
+        run: |
+          wget -q https://dl.min.io/client/mc/release/linux-amd64/mc
+          chmod +x mc
+          ./mc alias set remote/ https://cdn.shyim.de ${{ secrets.ACCESS_KEY }} ${{ secrets.ACCESS_SECRET }}
+          mkdir indexes
+          ./mc cp remote/phpstorm/ indexes/
           
       - name: Clone Shopware and run Composer install
         run: |
@@ -36,16 +44,14 @@ jobs:
         
       - name: Generate Cache Map
         run: |
+          mv $(pwd)/generated-cache/* $(pwd)/indexes
           wget -q https://packages.jetbrains.team/maven/p/ij/intellij-shared-indexes-public/com/jetbrains/intellij/indexing/shared/cdn-layout-tool/0.7.52/cdn-layout-tool-0.7.52.zip
           unzip cdn-layout-tool-0.7.52.zip
           export JAVA_HOME=$(pwd)/PhpStorm/jbr/
-          ./cdn-layout-tool-0.7.52/bin/cdn-layout-tool --indexes-dir=$(pwd)/generated-cache --url=https://cdn.shyim.de/phpstorm
+          ./cdn-layout-tool-0.7.52/bin/cdn-layout-tool --indexes-dir=$(pwd)/indexes --url=https://cdn.shyim.de/phpstorm
           
       - name: Upload to Minio
         run: |
-          wget -q https://dl.min.io/client/mc/release/linux-amd64/mc
-          chmod +x mc
-          ./mc alias set remote/ https://cdn.shyim.de ${{ secrets.ACCESS_KEY }} ${{ secrets.ACCESS_SECRET }}
-          ./mc cp $(pwd)/generated-cache/* remote/phpstorm
+          ./mc cp -r $(pwd)/indexes/* remote/phpstorm
 
       
