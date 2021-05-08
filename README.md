@@ -8,10 +8,4 @@ This is currently in Work in PhpStorm and does not hit very often.
 
 Create a new file `intellij.yaml` in your project with the content:
 
-```yaml
-sharedIndex:
-    project:
-        - url: https://cdn.shyim.de/phpstorm/project/sw6_tpl_development_trunk
-```
-
 After saving the file PhpStorm will question to download the shared index
