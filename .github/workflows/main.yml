@@ -11,7 +11,7 @@ jobs:
       
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: 8.0
           tools: composer:v2
           coverage: none
       
@@ -19,23 +19,20 @@ jobs:
         run: |
           wget -q https://dl.min.io/client/mc/release/linux-amd64/mc
           chmod +x mc
-          ./mc alias set remote/ https://cdn.shyim.de ${{ secrets.ACCESS_KEY }} ${{ secrets.ACCESS_SECRET }}
+          ./mc alias set remote/ https://cdn.fos.gg ${{ secrets.ACCESS_KEY }} ${{ secrets.ACCESS_SECRET }}
           mkdir indexes
           ./mc cp -r remote/phpstorm/ $(pwd)/indexes/
           
       - name: Clone Shopware and run Composer install
         run: |
-          git clone https://github.com/shopware/development.git --depth=1 development
-          cd development
-          rm -rf platform
           git clone https://github.com/shopware/platform.git --depth=1
           composer install
 
       - name: Download PhpStorm
         run: |
-          wget -q https://download-cf.jetbrains.com/webide/PhpStorm-2021.1.tar.gz
-          tar xfv PhpStorm-2021.1.tar.gz
-          rm PhpStorm-2021.1.tar.gz
+          wget -q https://download-cdn.jetbrains.com/webide/PhpStorm-2021.3.tar.gz
+          tar xfv PhpStorm-2021.3.tar.gz
+          rm PhpStorm-2021.3.tar.gz
           mv PhpStorm* PhpStorm
           mkdir generated-cache
           
@@ -45,10 +42,10 @@ jobs:
       - name: Generate Cache Map
         run: |
           mv $(pwd)/generated-cache/* $(pwd)/indexes
-          wget -q https://packages.jetbrains.team/maven/p/ij/intellij-shared-indexes-public/com/jetbrains/intellij/indexing/shared/cdn-layout-tool/0.7.52/cdn-layout-tool-0.7.52.zip
-          unzip cdn-layout-tool-0.7.52.zip
+          wget -q https://packages.jetbrains.team/maven/p/ij/intellij-shared-indexes-public/com/jetbrains/intellij/indexing/shared/cdn-layout-tool/0.8.65/cdn-layout-tool-0.8.65.zip
+          unzip cdn-layout-tool-0.8.65.zip
           export JAVA_HOME=$(pwd)/PhpStorm/jbr/
-          ./cdn-layout-tool-0.7.52/bin/cdn-layout-tool --indexes-dir=$(pwd)/indexes --url=https://cdn.shyim.de/phpstorm
+          ./cdn-layout-tool-0.8.65/bin/cdn-layout-tool --indexes-dir=$(pwd)/indexes --url=https://cdn.fos.gg/phpstorm
           
       - name: Upload to Minio
         run: |
