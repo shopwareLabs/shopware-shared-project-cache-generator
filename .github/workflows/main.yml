@@ -26,6 +26,7 @@ jobs:
       - name: Clone Shopware and run Composer install
         run: |
           git clone https://github.com/shopware/platform.git --depth=1
+          cd platform
           composer install
 
       - name: Download PhpStorm
@@ -37,7 +38,7 @@ jobs:
           mkdir generated-cache
           
       - name: Generate Cache
-        run: ./PhpStorm/bin/phpstorm.sh dump-shared-index project --output=$(pwd)/generated-cache --tmp=/tmp/phpstorm --project-dir=$(pwd)/development/ --project-id=sw6_tpl_development_trunk
+        run: ./PhpStorm/bin/phpstorm.sh dump-shared-index project --output=$(pwd)/generated-cache --tmp=/tmp/phpstorm --project-dir=$(pwd)/platform/ --project-id=sw6_trunk
         
       - name: Generate Cache Map
         run: |
