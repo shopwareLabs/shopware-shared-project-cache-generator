@@ -11,7 +11,7 @@ jobs:
       
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.0
+          php-version: 8.1
           tools: composer:v2
           coverage: none
       
@@ -31,9 +31,9 @@ jobs:
 
       - name: Download PhpStorm
         run: |
-          wget -q https://download-cdn.jetbrains.com/webide/PhpStorm-2021.3.tar.gz
-          tar xfv PhpStorm-2021.3.tar.gz
-          rm PhpStorm-2021.3.tar.gz
+          wget -q https://download-cdn.jetbrains.com/webide/PhpStorm-2022.2.3.tar.gz
+          tar xfv PhpStorm-2022.2.3.tar.gz
+          rm PhpStorm-2022.2.3.tar.gz
           mv PhpStorm* PhpStorm
           mkdir generated-cache
           
@@ -43,10 +43,10 @@ jobs:
       - name: Generate Cache Map
         run: |
           mv $(pwd)/generated-cache/* $(pwd)/indexes
-          wget -q https://packages.jetbrains.team/maven/p/ij/intellij-shared-indexes-public/com/jetbrains/intellij/indexing/shared/cdn-layout-tool/0.8.65/cdn-layout-tool-0.8.65.zip
-          unzip cdn-layout-tool-0.8.65.zip
+          wget -q https://packages.jetbrains.team/maven/p/ij/intellij-shared-indexes-public/com/jetbrains/intellij/indexing/shared/cdn-layout-tool/0.8.66/cdn-layout-tool-0.8.66.zip
+          unzip cdn-layout-tool-0.8.66.zip
           export JAVA_HOME=$(pwd)/PhpStorm/jbr/
-          ./cdn-layout-tool-0.8.65/bin/cdn-layout-tool --indexes-dir=$(pwd)/indexes --url=https://cdn.fos.gg/phpstorm
+          ./cdn-layout-tool-0.8.66/bin/cdn-layout-tool --indexes-dir=$(pwd)/indexes --url=https://cdn.fos.gg/phpstorm
           
       - name: Upload to Minio
         run: |
