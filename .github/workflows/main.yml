@@ -36,6 +36,8 @@ jobs:
           rm PhpStorm-2022.2.3.tar.gz
           mv PhpStorm* PhpStorm
           mkdir generated-cache
+          cp -R plugins/* ./PhpStorm/plugins/
+          ls -la ./PhpStorm/plugins/
           
       - name: Generate Cache
         run: ./PhpStorm/bin/phpstorm.sh dump-shared-index project --output=$(pwd)/generated-cache --tmp=/tmp/phpstorm --project-dir=$(pwd)/platform/ --project-id=sw6_trunk
