@@ -8,6 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Cache Jetbrains
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/JetBrains/
+          key: ${{ runner.os }}-trunk-2022.3.1
       
       - uses: shivammathur/setup-php@v2
         with:
@@ -19,7 +25,7 @@ jobs:
         run: |
           wget -q https://dl.min.io/client/mc/release/linux-amd64/mc
           chmod +x mc
-          ./mc alias set remote/ https://963ff7fb9c523564b5f3a398ab39d488.r2.cloudflarestorage.com ${{ secrets.ACCESS_KEY }} ${{ secrets.ACCESS_SECRET }}
+          ./mc alias set remote/ https://shopware-jetbrains.s3.eu-central-1.amazonaws.com ${{ secrets.ACCESS_KEY }} ${{ secrets.ACCESS_SECRET }}
           mkdir indexes
           # ./mc cp -r remote/phpstorm/ $(pwd)/indexes/
           
@@ -50,7 +56,7 @@ jobs:
           wget -q https://packages.jetbrains.team/maven/p/ij/intellij-shared-indexes-public/com/jetbrains/intellij/indexing/shared/cdn-layout-tool/0.8.66/cdn-layout-tool-0.8.66.zip
           unzip cdn-layout-tool-0.8.66.zip
           export JAVA_HOME=$(pwd)/PhpStorm/jbr/
-          ./cdn-layout-tool-0.8.66/bin/cdn-layout-tool --indexes-dir=$(pwd)/indexes --url=https://pub-8c005513525c430f8ed741a5e080379f.r2.dev
+          ./cdn-layout-tool-0.8.66/bin/cdn-layout-tool --indexes-dir=$(pwd)/indexes --url=https://doex1q8n3l36c.cloudfront.net
           
       - name: Upload to Minio
         run: |
