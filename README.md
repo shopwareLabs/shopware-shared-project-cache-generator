@@ -11,7 +11,7 @@ Create a new file `intellij.yaml` in your project with the content:
 ```yaml
 sharedIndex:
     project:
-        - url: https://cdn.fos.gg/phpstorm/project/sw6_trunk
+        - url: https://pub-8c005513525c430f8ed741a5e080379f.r2.dev/project/sw6_trunk
 ```
 
 After saving the file PhpStorm will question to download the shared index
