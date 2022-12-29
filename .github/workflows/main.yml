@@ -50,7 +50,7 @@ jobs:
           wget -q https://packages.jetbrains.team/maven/p/ij/intellij-shared-indexes-public/com/jetbrains/intellij/indexing/shared/cdn-layout-tool/0.8.66/cdn-layout-tool-0.8.66.zip
           unzip cdn-layout-tool-0.8.66.zip
           export JAVA_HOME=$(pwd)/PhpStorm/jbr/
-          ./cdn-layout-tool-0.8.66/bin/cdn-layout-tool --indexes-dir=$(pwd)/indexes --url=https://963ff7fb9c523564b5f3a398ab39d488.r2.cloudflarestorage.com/shopware-jetbrains
+          ./cdn-layout-tool-0.8.66/bin/cdn-layout-tool --indexes-dir=$(pwd)/indexes --url=https://pub-8c005513525c430f8ed741a5e080379f.r2.dev
           
       - name: Upload to Minio
         run: |
