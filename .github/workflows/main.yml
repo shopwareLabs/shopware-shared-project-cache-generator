@@ -33,9 +33,9 @@ jobs:
 
       - name: Download PhpStorm
         run: |
-          wget -q https://download-cdn.jetbrains.com/webide/PhpStorm-2022.2.3.tar.gz
-          tar xfv PhpStorm-2022.2.3.tar.gz
-          rm PhpStorm-2022.2.3.tar.gz
+          wget -q https://download-cdn.jetbrains.com/webide/PhpStorm-2022.3.1.tar.gz
+          tar xfv PhpStorm-2022.3.1.tar.gz
+          rm PhpStorm-2022.3.1.tar.gz
           mv PhpStorm* PhpStorm
           mkdir generated-cache
           cp -R plugins/* ./PhpStorm/plugins/
@@ -54,6 +54,6 @@ jobs:
           
       - name: Upload to Minio
         run: |
-          ./mc cp -r $(pwd)/indexes/* remote/phpstorm
+          ./mc cp -r $(pwd)/indexes/* remote/shopware-jetbrains
 
       
