@@ -25,15 +25,7 @@ jobs:
         uses: actions/setup-node@v3.5.1
         with:
           node-version: 18
-      
-      - name: Setup Minio Client and Download Storage
-        run: |
-          wget -q https://dl.min.io/client/mc/release/linux-amd64/mc
-          chmod +x mc
-          ./mc alias set remote/ https://shopware-jetbrains.s3.eu-central-1.amazonaws.com ${{ secrets.ACCESS_KEY }} ${{ secrets.ACCESS_SECRET }}
-          mkdir indexes
-          # ./mc cp -r remote/phpstorm/ $(pwd)/indexes/
-          
+
       - name: Clone Shopware and run Composer install
         run: |
           git clone https://github.com/shopware/platform.git --depth=1
@@ -42,12 +34,11 @@ jobs:
           npm install --prefix src/Administration/Resources/app/administration install
           npm install --prefix src/Storefront/Resources/app/storefront install
           cp -R ../.idea .
-          ls -la
 
       - name: Download PhpStorm
         run: |
           wget -q https://download-cdn.jetbrains.com/webide/PhpStorm-2022.3.1.tar.gz
-          tar xfv PhpStorm-2022.3.1.tar.gz
+          tar xf PhpStorm-2022.3.1.tar.gz
           rm PhpStorm-2022.3.1.tar.gz
           mv PhpStorm* PhpStorm
           mkdir generated-cache
@@ -65,8 +56,11 @@ jobs:
           export JAVA_HOME=$(pwd)/PhpStorm/jbr/
           ./cdn-layout-tool-0.8.66/bin/cdn-layout-tool --indexes-dir=$(pwd)/indexes --url=https://doex1q8n3l36c.cloudfront.net
           
-      - name: Upload to Minio
-        run: |
-          ./mc cp -r $(pwd)/indexes/* remote/
+      - name: AWS Deploy
+        run: aws s3 sync $(pwd)/indexes/* s3://shopware-jetbrains
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.ACCESS_SECRET }}
+          AWS_DEFAULT_REGION: eu-central-1
 
       
